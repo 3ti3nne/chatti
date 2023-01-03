@@ -10,5 +10,8 @@ class Like
 
     public function __construct(int $fromCatId, int $toCatId, int $likeValue)
     {
+        $this->fromCatId = $fromCatId;
+        $this->toCatId = $toCatId;
+        $this->likeValue = $likeValue;
     }
 }

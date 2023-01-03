@@ -11,7 +11,7 @@
 
 <body>
     <?php
-    require_once(__DIR__ . '../views/partials/navBar.php');
+    require_once(__DIR__ . '..app/views/partials/navBar.php');
     ?>
     <div>
         <h1>hello
@@ -20,7 +20,7 @@
     </div>
     {content}
     <?php
-    require_once(__DIR__ . '../views/partials/footer.php');
+    require_once(__DIR__ . '..app/views/partials/footer.php');
     ?>
 
     <script src="node_modules/tw-elements/dist/js/index.min.js"></script>

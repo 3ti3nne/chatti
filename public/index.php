@@ -9,4 +9,4 @@ require '../vendor/autoload.php';
 /**
  * Router
  */
-require '../src/router.php';
+require '../app/router.php';

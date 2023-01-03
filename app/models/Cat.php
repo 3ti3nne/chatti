@@ -16,7 +16,7 @@ class Cat
     public function __construct(string $name, string $password, string $email, int $age, int $castration, int $genre, string $description)
     {
         $this->name = $name;
-        $this->password = $password;
+        $this->password = password_hash($password,  PASSWORD_DEFAULT);
         $this->email = $email;
         $this->age = $age;
         $this->castration = $castration;

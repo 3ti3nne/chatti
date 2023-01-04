@@ -4,7 +4,7 @@
 /**
  * Autoloader
  */
-require '../vendor/autoload.php';
+require '../app/utilities/autoloader.php';
 
 /**
  * Router

@@ -6,6 +6,16 @@ module.exports = {
     "./node_modules/flowbite/**/*.js",
   ],
   theme: {
+    colors: {
+      rose: "#ff9292",
+      roseClair: "#FFB4B4",
+      roseVeryClair: "#FFDCDC",
+      blue: "#14445C",
+      blueClair: "#446474",
+      blueVeryClair: "#748C94",
+      beige: "#FCF4EC",
+      gray: "#ACB4B4",
+    },
     extend: {},
   },
   plugins: [require("tw-elements/dist/plugin"), require("flowbite/plugin")],

@@ -8,5 +8,5 @@ module.exports = {
   theme: {
     extend: {},
   },
-  plugins: [require("tw-elements/dist/plugin.js", "flowbite/plugin")],
+  plugins: [require("tw-elements/dist/plugin"), require("flowbite/plugin")],
 };

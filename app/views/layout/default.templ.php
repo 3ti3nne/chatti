@@ -10,14 +10,18 @@
 </head>
 
 <body>
-    <?php
-    /*  */require_once(__DIR__ . '/../partials/navBar.templ.php');
-    ?>
+    <main class="relative min-h-screen md:flex">
 
-    {content}
-
+        <?php
+        require_once(__DIR__ . '/../partials/navBar.templ.php');
+        ?>
+        <div id="content" class="flex-1">
+            {content}
+        </div>
+    </main>
     <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/index.min.js"></script>
     <script src="https://unpkg.com/flowbite@1.6.0/dist/flowbite.min.js"></script>
+    <script src="./js/script.js"></script>
 </body>
 
 </html>

@@ -1,8 +1,6 @@
 <?php
 
-use Chatti\utilities\Database;
+use Chatti\controllers\Controller;
 
-$database = new Database;
-//ROUTEUR
-
-echo $controller->render('layout.default', 'templates.accueil');
+$controller = new Controller;
+echo $controller->render('layout.default', 'templates.connexion');

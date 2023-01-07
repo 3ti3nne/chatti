@@ -1,0 +1,3 @@
+*.json
+/config/cert/
+/node_modules/

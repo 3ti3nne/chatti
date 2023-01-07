@@ -1,3 +1,5 @@
+const defaultTheme = require("tailwindcss/defaultTheme");
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -16,7 +18,11 @@ module.exports = {
       beige: "#FCF4EC",
       gray: "#ACB4B4",
     },
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ["Montserrat", ...defaultTheme.fontFamily.sans],
+      },
+    },
   },
   plugins: [require("tw-elements/dist/plugin"), require("flowbite/plugin")],
 };

@@ -11,14 +11,10 @@
 
 <body>
     <?php
-    require_once(__DIR__ . '/../partials/navBar.templ.php');
+    /*  */require_once(__DIR__ . '/../partials/navBar.templ.php');
     ?>
 
     {content}
-
-    <?php
-    require_once(__DIR__ . '/../partials/footer.templ.php');
-    ?>
 
     <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/index.min.js"></script>
     <script src="https://unpkg.com/flowbite@1.6.0/dist/flowbite.min.js"></script>

@@ -14,7 +14,7 @@ class Database
     {
         global $databaseUserInformations;
 
-        $this->connexion = new PDO('mysql:host=' . $databaseUserInformations['db']['host'] . ';dbname=' . $databaseUserInformations['db']['database'], $databaseUserInformations['db']['user'], $databaseUserInformations['db']['password'], [PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8']);
+        $this->connexion = new PDO(':host=' . $databaseUserInformations['db']['host'] . ';dbname=' . $databaseUserInformations['db']['database'], $databaseUserInformations['db']['user'], $databaseUserInformations['db']['password'], [PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8']);
         $this->connexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 

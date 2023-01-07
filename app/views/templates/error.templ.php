@@ -1,6 +1,6 @@
 <div class="flex justify-center">
     <div class="rounded-lg shadow-lg bg-white max-w-sm">
-        <img class="rounded-t-lg" src="https://mdbootstrap.com/img/new/standard/nature/182.jpg" alt="" />
+        <img class="rounded-t-lg" src="./../imgs/missingCat.jpg" alt="Chat perdu" />
         <div class="p-6">
             <h5 class="text-gray-900 text-xl font-medium mb-2">Chat perdu!</h5>
             <p class="text-gray-700 text-base mb-4">

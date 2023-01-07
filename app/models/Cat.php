@@ -23,4 +23,8 @@ class Cat
         $this->genre = $genre;
         $this->description = $description;
     }
+
+    public function selectAllCat()/* : array */
+    {
+    }
 }

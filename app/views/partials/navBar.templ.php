@@ -10,7 +10,7 @@
         </svg>
     </a>
 </nav>
-
+test
 <!-- NAVBAR -->
 <nav id="sidebarNav" class="w-64 text-beige flex flex-col h-screen absolute inset-y-0 left-0 transform -translate-x-full md:relative md:translate-x-0 transition duration-200 ease-in-out" aria-label="Sidebar">
     <!-- PROFILE -->

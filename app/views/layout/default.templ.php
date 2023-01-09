@@ -15,7 +15,7 @@
         <?php
         require_once(__DIR__ . '/../partials/navBar.templ.php');
         ?>
-        <div id="content" class="flex-1">
+        <div id="content" class="flex flex-1 items-center justify-center bg-center bg-cover min-h-screen" style="background-image: url(./imgs/backgroundPaws.svg);">
             {content}
         </div>
     </main>

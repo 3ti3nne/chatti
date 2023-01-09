@@ -9,6 +9,8 @@ class Controller
     const TITLE = 'Chatti';
 
     /**
+     * Prevent from displaying php code before finishing the process, like a transaction,
+     * saving it in a variable and replace {variable} with the content.
      * 
      */
     public function render($layout, $view, $data = null)

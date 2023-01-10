@@ -40,6 +40,7 @@ class CatController extends Controller
     {
         return $this->render('layout.default', 'templates.chat');
     }
+
     public function aboutDisplay()
     {
         return $this->render('layout.default', 'templates.about');

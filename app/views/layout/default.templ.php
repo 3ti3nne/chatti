@@ -9,13 +9,13 @@
     <title>{headTitle}</title>
 </head>
 
-<body>
-    <main class="relative min-h-screen md:flex">
+<body class="md:overflow-hidden overflow-auto">
+    <main class="relative max-h-screen md:flex">
 
         <?php
         require_once(__DIR__ . '/../partials/navBar.templ.php');
         ?>
-        <div id="content" class="flex flex-1 items-center justify-center bg-center bg-cover min-h-screen" style="background-image: url(./imgs/backgroundPaws.svg);">
+        <div id="content" class="flex flex-1 items-center justify-center bg-center bg-cover py-10 md:min-h-screen" style="background-image: url(./imgs/backgroundPaws.svg);">
             {content}
         </div>
     </main>

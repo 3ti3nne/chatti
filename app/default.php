@@ -1,7 +1,8 @@
 <?php
 
-use Chatti\controllers\Controller;
+use Chatti\CatController\CatController;
 
-$controller = new Controller;
 
-echo $controller->render('layout.default', 'templates.connexion');
+$catController = new CatController;
+
+echo $catController->authentificationDisplay();

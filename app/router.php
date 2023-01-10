@@ -8,14 +8,22 @@ use Chatti\CatController\CatController;
 use Chatti\controllers\Controller;
 
 $uri = $_SERVER['REQUEST_URI'];
+$lay = 'layout.default';
+
+session_start();
 
 
 try {
     //ROUTEUR
     if (isset($_SESSION['user']['pseudo']) && !empty($_SESSION['user']['pseudo'])) {
         $catController = new CatController();
-
-        $catController->render('layout.default', 'templates.home');
+        echo $catController->render($lay, 'templates.home');
+    } elseif (!isset($_SESSION['user']['pseudo']) && ($uri === '/register')) {
+        $catController = new CatController();
+        echo $catController->render($lay, 'templates.registration');
+    } else {
+        $catController = new CatController();
+        echo $catController->render($lay, 'templates.connexion');
     }
 
     if (!empty($uri)) {
@@ -42,19 +50,23 @@ try {
                 echo $catController->aboutDisplay();
                 break;
 
+            case '/register':
+                $catController = new CatController();
+                echo $catController->registrationDisplay();
+                break;
+
             default:
 
                 throw new Exception('Page introuvable');
         }
     }
 } catch (PDOException $error) {
-    $controller = new Controller;
 
+    $controller = new Controller;
     $errorMessage = 'Chat marche pas !';
-
-    echo $controller->render('layout.default', 'templates.error', $errorMessage);
+    echo $controller->render($lay, 'templates.error', $errorMessage);
 } catch (Exception $error) {
-    $controller = new Controller;
 
-    echo $controller->render('layout.default', 'templates.error', $error->getMessage());
+    $controller = new Controller;
+    echo $controller->render($lay, 'templates.error', $error->getMessage());
 }

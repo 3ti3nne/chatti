@@ -7,6 +7,8 @@
 use Chatti\CatController\CatController;
 use Chatti\controllers\Controller;
 
+$uri = $_SERVER['REQUEST_URI'];
+
 
 try {
     //ROUTEUR
@@ -16,26 +18,33 @@ try {
         $catController->render('layout.default', 'templates.home');
     }
 
-    if (!empty($_GET)) {
+    if (!empty($uri)) {
 
-        if (isset($_GET['home'])) {
-            $catController = new CatController();
+        switch ($uri) {
 
-            echo $catController->homeDisplay();
-        } elseif (isset($_GET['settings'])) {
-            $catController = new CatController();
+            case '/':
+                $catController = new CatController();
+                echo $catController->homeDisplay();
+                break;
 
-            echo $catController->settingsDisplay();
-        } elseif (isset($_GET['chat'])) {
-            $catController = new CatController();
+            case '/settings':
+                $catController = new CatController();
+                echo $catController->settingsDisplay();
+                break;
 
-            echo $catController->chatDisplay();
-        } elseif (isset($_GET['about'])) {
-            $catController = new CatController();
+            case  '/chat':
+                $catController = new CatController();
+                echo $catController->chatDisplay();
+                break;
 
-            echo $catController->aboutDisplay();
-        } else {
-            throw new Exception('Page introuvable');
+            case '/about':
+                $catController = new CatController();
+                echo $catController->aboutDisplay();
+                break;
+
+            default:
+
+                throw new Exception('Page introuvable');
         }
     }
 } catch (PDOException $error) {

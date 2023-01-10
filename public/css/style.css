@@ -4198,6 +4198,10 @@ textarea.form-control.is-invalid {
   margin: 0px;
 }
 
+.m-6 {
+  margin: 1.5rem;
+}
+
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
@@ -4335,16 +4339,16 @@ textarea.form-control.is-invalid {
   width: 100%;
 }
 
+.w-80 {
+  width: 20rem;
+}
+
 .w-4 {
   width: 1rem;
 }
 
 .w-1\/2 {
   width: 50%;
-}
-
-.max-w-sm {
-  max-width: 24rem;
 }
 
 .flex-1 {
@@ -4673,6 +4677,10 @@ textarea.form-control.is-invalid {
 
 .p-1 {
   padding: 0.25rem;
+}
+
+.p-10 {
+  padding: 2.5rem;
 }
 
 .py-5 {

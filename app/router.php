@@ -4,6 +4,7 @@
  * Will get $_POST, $_GET and AJAX and redirect
  */
 
+use Chatti\Cat\Cat;
 use Chatti\CatController\CatController;
 use Chatti\controllers\Controller;
 
@@ -14,7 +15,24 @@ session_start();
 
 
 try {
-    //ROUTEUR
+
+    /**
+     * $_POST request handling
+     */
+    if (!empty($_POST)) {
+        if (isset($_POST['registration']) && !empty($_POST['name'])) {
+            $cat = new Cat($_POST);
+            $catController = new CatController();
+            $infos = $catController->insertNewUser($cat);
+            $cat->insertNewUser($infos);
+        }
+    }
+
+
+
+    /**
+     * Autologging with $_SESSION variables, routing
+     */
     if (isset($_SESSION['user']['pseudo']) && !empty($_SESSION['user']['pseudo'])) {
         $catController = new CatController();
         echo $catController->render($lay, 'templates.home');
@@ -26,6 +44,10 @@ try {
         echo $catController->render($lay, 'templates.connexion');
     }
 
+
+    /**
+     * Route similar to $_GET
+     */
     if (!empty($uri)) {
 
         switch ($uri) {

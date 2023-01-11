@@ -2,6 +2,7 @@
 
 namespace Chatti\CatController;
 
+use Chatti\Cat\Cat;
 use Chatti\controllers\Controller;
 
 /**
@@ -44,5 +45,16 @@ class CatController extends Controller
     public function aboutDisplay()
     {
         return $this->render('layout.default', 'templates.about');
+    }
+
+    /**
+     * @param Cat
+     * 
+     * Get private object vars and insert into database
+     */
+    public function insertNewUser(Cat $catInfos)
+    {
+        $infos = $catInfos->getObject();
+        return $infos;
     }
 }

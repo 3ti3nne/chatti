@@ -9,8 +9,8 @@
     <title>{headTitle}</title>
 </head>
 
-<body class="md:overflow-hidden overflow-auto">
-    <main class="relative max-h-screen md:flex">
+<body class="md:overflow-hidden">
+    <main class="relative h-screen md:flex">
 
         <?php
         require_once(__DIR__ . '/../partials/navBar.templ.php');

@@ -7,10 +7,10 @@ use PDO;
 class Database
 {
 
-    private $connect = null;
+    private static $instance = null;
     private PDO $connexion;
 
-    public function __construct()
+    private function __construct()
     {
         global $databaseUserInformations;
 
@@ -18,11 +18,26 @@ class Database
         $this->connexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
+    /**
+     * Singleton method to get only one instance of Database
+     * 
+     * @return Database
+     */
     public static function getInstance(): ?Database
     {
-        if (is_null(self::$connect)) {
-            self::$connect = new Database();
+        if (is_null(self::$instance)) {
+            self::$instance = new Database();
         }
-        return self::$connect;
+        return self::$instance;
+    }
+
+    /**
+     * Getter for PDO Object
+     * 
+     * @return PDO $connexion
+     */
+    public function getConnexion()
+    {
+        return $this->connexion;
     }
 }

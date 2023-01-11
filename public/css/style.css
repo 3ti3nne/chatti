@@ -4203,16 +4203,6 @@ textarea.form-control.is-invalid {
   margin-right: auto;
 }
 
-.mx-20 {
-  margin-left: 5rem;
-  margin-right: 5rem;
-}
-
-.my-10 {
-  margin-top: 2.5rem;
-  margin-bottom: 2.5rem;
-}
-
 .mb-1 {
   margin-bottom: 0.25rem;
 }
@@ -4243,14 +4233,6 @@ textarea.form-control.is-invalid {
 
 .mt-2 {
   margin-top: 0.5rem;
-}
-
-.mt-40 {
-  margin-top: 10rem;
-}
-
-.mt-10 {
-  margin-top: 2.5rem;
 }
 
 .block {
@@ -4285,16 +4267,16 @@ textarea.form-control.is-invalid {
   display: none;
 }
 
+.h-screen {
+  height: 100vh;
+}
+
 .h-20 {
   height: 5rem;
 }
 
 .h-16 {
   height: 4rem;
-}
-
-.h-screen {
-  height: 100vh;
 }
 
 .h-24 {
@@ -4315,18 +4297,6 @@ textarea.form-control.is-invalid {
 
 .h-4 {
   height: 1rem;
-}
-
-.max-h-screen {
-  max-height: 100vh;
-}
-
-.min-h-screen {
-  min-height: 100vh;
-}
-
-.min-h-full {
-  min-height: 100%;
 }
 
 .w-20 {
@@ -4377,10 +4347,6 @@ textarea.form-control.is-invalid {
   flex-shrink: 1;
 }
 
-.flex-grow {
-  flex-grow: 1;
-}
-
 .-translate-x-full {
   --tw-translate-x: -100%;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
@@ -4429,6 +4395,10 @@ textarea.form-control.is-invalid {
 
 .cursor-pointer {
   cursor: pointer;
+}
+
+.resize-none {
+  resize: none;
 }
 
 .resize {
@@ -4499,16 +4469,8 @@ textarea.form-control.is-invalid {
   margin-left: calc(0.5rem * calc(1 - var(--tw-space-x-reverse)));
 }
 
-.overflow-auto {
-  overflow: auto;
-}
-
 .overflow-hidden {
   overflow: hidden;
-}
-
-.overflow-y-auto {
-  overflow-y: auto;
 }
 
 .rounded-full {
@@ -4714,6 +4676,11 @@ textarea.form-control.is-invalid {
   padding: 0.25rem;
 }
 
+.py-10 {
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
+}
+
 .py-5 {
   padding-top: 1.25rem;
   padding-bottom: 1.25rem;
@@ -4757,11 +4724,6 @@ textarea.form-control.is-invalid {
 .py-3 {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
-}
-
-.py-10 {
-  padding-top: 2.5rem;
-  padding-bottom: 2.5rem;
 }
 
 .pl-2 {
@@ -5220,33 +5182,6 @@ textarea.form-control.is-invalid {
     position: relative;
   }
 
-  .md\:my-8 {
-    margin-top: 2rem;
-    margin-bottom: 2rem;
-  }
-
-  .md\:mx-auto {
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .md\:my-20 {
-    margin-top: 5rem;
-    margin-bottom: 5rem;
-  }
-
-  .md\:mt-20 {
-    margin-top: 5rem;
-  }
-
-  .md\:mt-40 {
-    margin-top: 10rem;
-  }
-
-  .md\:mt-60 {
-    margin-top: 15rem;
-  }
-
   .md\:mt-80 {
     margin-top: 20rem;
   }
@@ -5263,18 +5198,6 @@ textarea.form-control.is-invalid {
     height: 100vh;
   }
 
-  .md\:h-4\/5 {
-    height: 80%;
-  }
-
-  .md\:h-full {
-    height: 100%;
-  }
-
-  .md\:max-h-screen {
-    max-height: 100vh;
-  }
-
   .md\:min-h-screen {
     min-height: 100vh;
   }
@@ -5288,24 +5211,11 @@ textarea.form-control.is-invalid {
     transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   }
 
-  .md\:overflow-auto {
-    overflow: auto;
-  }
-
   .md\:overflow-hidden {
     overflow: hidden;
   }
 
   .md\:overflow-y-auto {
     overflow-y: auto;
-  }
-
-  .md\:py-20 {
-    padding-top: 5rem;
-    padding-bottom: 5rem;
-  }
-
-  .md\:pt-20 {
-    padding-top: 5rem;
   }
 }

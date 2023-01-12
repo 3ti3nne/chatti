@@ -3,6 +3,7 @@
 namespace Chatti\Cat;
 
 use Chatti\utilities\Database;
+use Exception;
 
 class Cat
 {
@@ -33,26 +34,58 @@ class Cat
      */
     public function getObject(): array
     {
-        $catObject = get_object_vars($this);
-        return $catObject;
+        $catArray = get_object_vars($this);
+        return $catArray;
     }
 
-    public function insertNewUser(array $objectInfos)
+    /**
+     * Insert new user with informations from the object Cat, created after register's form passed Model
+     * @param array $data 
+     * @return bool, throw PDOException if false
+     */
+    public function insert(array $data)
     {
 
+        ///PUT A FUNCTION TO SELECT AND CHECKS IF EMAIL ALREADY EXISTS
         $db = Database::getInstance()->getConnexion();
 
         $request = "INSERT INTO chats(name, email, password, age, castration, genre, description)VALUES(:name, :email, :password, :age, :castration, :genre, :description)";
         $statement = $db->prepare($request);
 
-        $statement->bindParam(':name', $objectInfos['name'], $db::PARAM_STR, 30);
-        $statement->bindParam(':email', $objectInfos['email'], $db::PARAM_STR, 50);
-        $statement->bindParam(':password', $objectInfos['password'], $db::PARAM_STR, 100);
-        $statement->bindParam(':age', $objectInfos['age'], $db::PARAM_INT);
-        $statement->bindParam(':castration', $objectInfos['castration'], $db::PARAM_INT);
-        $statement->bindParam(':genre', $objectInfos['genre'], $db::PARAM_INT);
-        $statement->bindParam(':description', $objectInfos['description'], $db::PARAM_STR, 100);
+        $statement->bindParam(':name', $data['name'], $db::PARAM_STR, 30);
+        $statement->bindParam(':email', $data['email'], $db::PARAM_STR, 50);
+        $statement->bindParam(':password', $data['password'], $db::PARAM_STR, 100);
+        $statement->bindParam(':age', $data['age'], $db::PARAM_INT);
+        $statement->bindParam(':castration', $data['castration'], $db::PARAM_INT);
+        $statement->bindParam(':genre', $data['genre'], $db::PARAM_INT);
+        $statement->bindParam(':description', $data['description'], $db::PARAM_STR, 100);
 
         $statement->execute();
+    }
+
+    /**
+     * Login user after comparison
+     * 
+     * @return array||string
+     */
+    public static function login($userInfos)
+    {
+        $db = Database::getInstance()->getConnexion();
+
+        $request = "SELECT * FROM chats WHERE (email = :email)";
+        $statement = $db->prepare($request);
+        $statement->execute(array('email' => $userInfos['email']));
+
+        if ($statement === false) {
+            return;
+        }
+
+        $userRetrievedFromDatabase = $statement->fetch($db::FETCH_ASSOC);
+
+        if (is_array($userRetrievedFromDatabase) && !empty($userRetrievedFromDatabase)) {
+            if (password_verify($userInfos['password'], $userRetrievedFromDatabase['password'])) {
+                return $userRetrievedFromDatabase;
+            }
+        }
     }
 }

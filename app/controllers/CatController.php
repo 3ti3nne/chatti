@@ -50,11 +50,44 @@ class CatController extends Controller
     /**
      * @param Cat
      * 
-     * Get private object vars and insert into database
+     * Get private object vars to an array and insert into database
      */
-    public function insertNewUser(Cat $catInfos)
+    public function insertUser($registeringCatInfos)
     {
-        $infos = $catInfos->getObject();
-        return $infos;
+        $cat = new Cat($registeringCatInfos);
+        $infos = $cat->getObject();
+        $cat->insert($infos);
+    }
+
+    public function loginUser(array $userInfos)
+    {
+        $userRetrievedFromDatabase = Cat::login($userInfos);
+
+        if (!is_array($userRetrievedFromDatabase)) {
+            $userRetrievedFromDatabase = 'Informations de connexions erronnées';
+            echo $this->render('layout.default', 'templates.connexion', $userRetrievedFromDatabase);
+        }
+
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        $_SESSION['userContext']['user']['id'] = $userRetrievedFromDatabase['id'];
+        $_SESSION['userContext']['user']['name'] = $userRetrievedFromDatabase['name'];
+        $_SESSION['userContext']['user']['email'] = $userRetrievedFromDatabase['email'];
+        $_SESSION['userContext']['user']['castration'] = $userRetrievedFromDatabase['castration'];
+        $_SESSION['userContext']['user']['age'] = $userRetrievedFromDatabase['age'];
+        $_SESSION['userContext']['user']['description'] = $userRetrievedFromDatabase['age'];
+    }
+
+    /**
+     * Logout function
+     * 
+     */
+    public function logOutUser()
+    {
+        session_unset();
+        session_destroy();
+        echo self::authentificationDisplay();
     }
 }

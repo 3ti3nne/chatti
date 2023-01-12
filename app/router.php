@@ -4,9 +4,8 @@
  * Will get $_POST, $_GET and AJAX and redirect
  */
 
-use Chatti\Cat\Cat;
-use Chatti\CatController\CatController;
 use Chatti\controllers\Controller;
+use Chatti\CatController\CatController;
 
 $uri = $_SERVER['REQUEST_URI'];
 $lay = 'layout.default';
@@ -21,27 +20,28 @@ try {
      */
     if (!empty($_POST)) {
         if (isset($_POST['registration']) && !empty($_POST['name'])) {
-            $cat = new Cat($_POST);
             $catController = new CatController();
-            $infos = $catController->insertNewUser($cat);
-            $cat->insertNewUser($infos);
+            $catController->insertUser($_POST);
+        }
+
+        if (isset($_POST['login']) && !empty($_POST['email'])) {
+            $catController = new CatController();
+            $catController->loginUser($_POST);
+        }
+
+        if (isset($_POST['logOut'])) {
+            $catController = new CatController();
+            $catController->logOutUser();
         }
     }
 
 
-
     /**
-     * Autologging with $_SESSION variables, routing
+     * Prevents all but connexion and register page when not connected
      */
-    if (isset($_SESSION['user']['pseudo']) && !empty($_SESSION['user']['pseudo'])) {
-        $catController = new CatController();
-        echo $catController->render($lay, 'templates.home');
-    } elseif (!isset($_SESSION['user']['pseudo']) && ($uri === '/register')) {
+    if (!isset($_SESSION['userContext']['user']['name']) && ($uri === '/register')) {
         $catController = new CatController();
         echo $catController->render($lay, 'templates.registration');
-    } else {
-        $catController = new CatController();
-        echo $catController->render($lay, 'templates.connexion');
     }
 
 
@@ -50,36 +50,40 @@ try {
      */
     if (!empty($uri)) {
 
-        switch ($uri) {
+        if (isset($_SESSION['userContext']['user']['name']) && !empty($_SESSION['userContext']['user']['name'])) {
 
-            case '/':
-                $catController = new CatController();
-                echo $catController->homeDisplay();
-                break;
 
-            case '/settings':
-                $catController = new CatController();
-                echo $catController->settingsDisplay();
-                break;
+            switch ($uri) {
 
-            case  '/chat':
-                $catController = new CatController();
-                echo $catController->chatDisplay();
-                break;
+                case '/':
+                    $catController = new CatController();
+                    echo $catController->homeDisplay();
+                    break;
 
-            case '/about':
-                $catController = new CatController();
-                echo $catController->aboutDisplay();
-                break;
+                case '/settings':
+                    $catController = new CatController();
+                    echo $catController->settingsDisplay();
+                    break;
 
-            case '/register':
-                $catController = new CatController();
-                echo $catController->registrationDisplay();
-                break;
+                case  '/chat':
+                    $catController = new CatController();
+                    echo $catController->chatDisplay();
+                    break;
 
-            default:
+                case '/about':
+                    $catController = new CatController();
+                    echo $catController->aboutDisplay();
+                    break;
 
-                throw new Exception('Page introuvable');
+                case '/register':
+                    $catController = new CatController();
+                    echo $catController->registrationDisplay();
+                    break;
+
+                default:
+
+                    throw new Exception('Page introuvable');
+            }
         }
     }
 } catch (PDOException $error) {

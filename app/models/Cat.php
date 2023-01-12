@@ -66,7 +66,7 @@ class Cat
     /**
      * Login user after comparison
      * 
-     * @return array||string
+     * @return array||void
      */
     public static function login($userInfos)
     {

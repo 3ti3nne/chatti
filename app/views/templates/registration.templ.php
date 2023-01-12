@@ -1,5 +1,5 @@
 <div class="flex flex-col justify-center text-center p-6 w-3/4 md:h-screen rounded-lg shadow-lg bg-white md:overflow-y-auto no-scrollbar">
-    <h2 class="w-full px-3 justify-center md:mt-80 mb-6 text-3xl font-bold dark:text-white text-transparent bg-clip-text bg-gradient-to-br from-roseVeryClair via-roseClair to-rose">Inscription</h2>
+    <h2 class="w-full px-3 justify-center md:mt-56 mb-6 text-3xl font-bold dark:text-white text-transparent bg-clip-text bg-gradient-to-br from-roseVeryClair via-roseClair to-rose">Inscription</h2>
     <form action="/" method="POST">
 
         <div class="mx-auto sm:w-3/4">

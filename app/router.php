@@ -75,11 +75,6 @@ try {
                     echo $catController->aboutDisplay();
                     break;
 
-                case '/register':
-                    $catController = new CatController();
-                    echo $catController->registrationDisplay();
-                    break;
-
                 default:
 
                     throw new Exception('Page introuvable');

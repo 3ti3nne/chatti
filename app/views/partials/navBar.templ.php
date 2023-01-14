@@ -17,11 +17,21 @@
     <div class="flex py-5 pl-2 bg-roseClair dark:bg-gray-800 dark:border-gray-700">
         <div class="flex flex-row">
             <div>
-                <img class="w-24 h-24 rounded-full shadow-lg object-cover border-2" src="./imgs/chat.jpg" alt="" />
+                <?php
+                if (isset($_SESSION['userContext']['user']['picture']) && !empty($_SESSION['userContext']['user']['picture'])) {
+                ?>
+                    <img class="w-24 h-24 rounded-full shadow-lg object-cover border-2" src="<?= $_SESSION['userContext']['user']['picture'] ?>" alt="" />
+                <?php
+                } else {
+                ?>
+                    <a href="/profile"><img class="w-24 h-24 rounded-full shadow-lg object-cover border-2" src="./imgs/miniBackgroundPaws.svg" alt="" /></a>
+                <?php
+                }
+                ?>
             </div>
             <div class="flex flex-col justify-center pl-5">
-                <h5 class="mb-1 text-2xl font-bold dark:text-white">Name</h5>
-                <a class="text-xl rounded-lg p-2 dark:text-gray-400 hover:bg-rose" href="/?profile">Profil</a>
+                <h5 class="mb-1 text-2xl font-bold dark:text-white"><? $_SESSION['userContext']['user']['name'] ? $_SESSION['userContext']['user']['name'] : null ?></h5>
+                <a class="text-xl rounded-lg p-2 dark:text-gray-400 hover:bg-rose" href="/profile">Voir le profil</a>
             </div>
         </div>
         <button class="mobileMenuButton absolute top-0 right-0 p-2 hover:bg-rose rounded-lg transition duration-200 md:hidden">

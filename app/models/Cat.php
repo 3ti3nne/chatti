@@ -3,7 +3,6 @@
 namespace Chatti\Cat;
 
 use Chatti\utilities\Database;
-use Exception;
 
 class Cat
 {
@@ -72,11 +71,16 @@ class Cat
     {
         $db = Database::getInstance()->getConnexion();
 
-        $request = "SELECT * FROM chats WHERE (email = :email)";
+        $request = "SELECT * FROM chats
+        LEFT JOIN photos on chats.chat_id = photos.photo_chat_id
+        LEFT JOIN likes on chats.chat_id = likes.from_chat_id
+        LEFT JOIN conversations on chats.chat_id = conversations.conversation_chat_id_one
+        LEFT JOIN messages on chats.chat_id = messages.message_chat_id
+        WHERE (email = :email)";
         $statement = $db->prepare($request);
         $statement->execute(array('email' => $userInfos['email']));
 
-        if ($statement === false) {
+        if (!$statement) {
             return;
         }
 

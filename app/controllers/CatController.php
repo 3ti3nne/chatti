@@ -71,13 +71,16 @@ class CatController extends Controller
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
+        echo "<pre>";
+        print_r($userRetrievedFromDatabase);
+        echo "</pre>";
 
-        $_SESSION['userContext']['user']['id'] = $userRetrievedFromDatabase['id'];
+        $_SESSION['userContext']['user']['id'] = $userRetrievedFromDatabase['chat_id'];
         $_SESSION['userContext']['user']['name'] = $userRetrievedFromDatabase['name'];
         $_SESSION['userContext']['user']['email'] = $userRetrievedFromDatabase['email'];
         $_SESSION['userContext']['user']['castration'] = $userRetrievedFromDatabase['castration'];
         $_SESSION['userContext']['user']['age'] = $userRetrievedFromDatabase['age'];
-        $_SESSION['userContext']['user']['description'] = $userRetrievedFromDatabase['age'];
+        $_SESSION['userContext']['user']['description'] = $userRetrievedFromDatabase['description'];
     }
 
     /**

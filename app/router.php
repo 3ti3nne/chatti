@@ -60,6 +60,11 @@ try {
                     echo $catController->homeDisplay();
                     break;
 
+                case '/profile':
+                    $catController = new CatController();
+                    echo $catController->profileDisplay();
+                    break;
+
                 case '/settings':
                     $catController = new CatController();
                     echo $catController->settingsDisplay();

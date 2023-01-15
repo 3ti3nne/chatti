@@ -1,18 +1,29 @@
 <!-- MOBILE NAVBAR -->
 <nav id="mobileNavTopMenu" class="bg-rose text-beige flex justify-between md:hidden transition duration-200 ease-in-out">
-    <button class=" mobileMenuButton p-2">
-        <img class="w-20 h-20 rounded-full shadow-lg object-cover border-2" src="./imgs/chat.jpg" alt="" />
+    <button class="mobileMenuButton p-2">
+        <?php
+        if (isset($_SESSION['userContext']['user']['picture']) && !empty($_SESSION['userContext']['user']['picture'])) {
+        ?>
+            <img class="w-20 h-20 rounded-full shadow-lg object-cover border-2" src="data:image/jpeg;base64,<?= base64_encode($_SESSION['userContext']['user']['picture']) ?>" alt="" />
+        <?php
+        } else {
+        ?>
+            <img class="w-20 h-20 rounded-full shadow-lg object-cover border-2" src="./imgs/miniBackgroundPaws.svg" alt="" />
+
+        <?php
+        }
+        ?>
     </button>
 
     <img src="./imgs/miniBackgroundPaws.svg" alt="" class="w-28 h-28 object-fit">
-    <a href="#" class="block p-4">
+    <a href="/chat" class="block p-4">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-16 h-16">
             <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
         </svg>
     </a>
 </nav>
 <!-- NAVBAR -->
-<nav id="sidebarNav" class="w-64 text-beige flex flex-col h-screen absolute inset-y-0 left-0 transform -translate-x-full md:relative md:translate-x-0 transition duration-200 ease-in-out" aria-label="Sidebar">
+<nav id="sidebarNav" class="z-40 w-64 text-beige flex flex-col h-screen absolute inset-y-0 left-0 transform -translate-x-full md:relative md:translate-x-0 transition duration-200 ease-in-out" aria-label="Sidebar">
     <!-- PROFILE -->
     <div class="flex py-5 pl-2 bg-roseClair dark:bg-gray-800 dark:border-gray-700">
         <div class="flex flex-row">
@@ -24,7 +35,7 @@
                 <?php
                 } else {
                 ?>
-                    <a href="/profile"><img class="w-24 h-24 rounded-full shadow-lg object-cover border-2" src="./imgs/miniBackgroundPaws.svg" alt="" /></a>
+                    <img class="w-24 h-24 rounded-full shadow-lg object-cover border-2" src="./imgs/miniBackgroundPaws.svg" alt="" />
                 <?php
                 }
                 ?>

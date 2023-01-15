@@ -5,6 +5,16 @@
         <div class="mx-auto sm:w-3/4">
             <input type="hidden" name="registration">
 
+            <?php
+            if ($data) {
+            ?>
+                <div class="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-gray-800 dark:text-red-400" role="alert">
+                    <?= $data ?>
+                </div>
+            <?php
+            }
+            ?>
+
             <div class="form-group mb-6">
                 <input name="name" required type="text" class="form-control w-full mx-auto md:w-3/4 block px-3 py-1.5 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:bg-white focus:border-roseClair focus:ring-0" id="name" placeholder="Nom">
             </div>
@@ -34,15 +44,6 @@
             </div>
 
             <div class="form-group mb-6">
-                <?php
-                if ($data) {
-                ?>
-                    <div class="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-gray-800 dark:text-red-400" role="alert">
-                        <?= $data ?>
-                    </div>
-                <?php
-                }
-                ?>
                 <input name="picture" required type="file" class="form-control block w-full mx-auto md:w-3/4 px-3 py-1.5 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:bg-white focus:border-roseClair focus:ring-0" id="picture" placeholder="Photo">
             </div>
 
@@ -54,7 +55,7 @@
                 <input name="password" type="password" required class="form-control block w-full mx-auto md:w-3/4 px-3 py-1.5 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:bg-white focus:border-roseClair focus:ring-0" id="password" placeholder="Mot de passe">
             </div>
 
-            <button type="submit" class="flex items-center justify-center p-0.5 mb-2 mx-auto overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-rose via-roseClair to-roseVeryClair group-hover:from-rose group-hover:via-roseClair group-hover:to-roseVeryClair hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800">
+            <button type="submit" class="flex items-center justify-center p-0.5 mb-2 mx-auto overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-rose via-roseClair to-roseVeryClair group-hover:from-rose group-hover:via-roseClair group-hover:to-roseVeryClair hover:text-white dark:text-white focus:ring-4 focus:outline-none">
                 <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0 text-lg font-semibold">
                     S'enregistrer
                 </span>

@@ -48,11 +48,12 @@ class CatController extends Controller
     }
 
     /**
-     * @param Cat
+     * @param array
      * 
+     * Create new Cat Object for security and type
      * Get private object vars to an array and insert into database
      */
-    public function insertUser($registeringCatInfos, $registeringCatPicture)
+    public function insertUser(array $registeringCatInfos, array $registeringCatPicture)
     {
         $error = null;
 
@@ -69,7 +70,10 @@ class CatController extends Controller
 
                     $cat = new Cat($registeringCatInfos, $registeringCatPicture);
                     $infos = $cat->getObject();
-                    $cat->insert($infos);
+                    if (!($cat->insert($infos))) {
+                        $error = "Cet email est déjà utilisé !";
+                        echo $this->render('layout.default', 'templates.registration', $error);
+                    };
                 } else {
                     $error = "Le format de l'image n'est pas accepté !";
                     echo $this->render('layout.default', 'templates.registration', $error);
@@ -97,7 +101,7 @@ class CatController extends Controller
             session_start();
         }
 
-        $_SESSION['userContext']['user']['id'] = $userRetrievedFromDatabase['chat_id'];
+        $_SESSION['userContext']['user']['id'] = (int)$userRetrievedFromDatabase['chat_id'];
         $_SESSION['userContext']['user']['name'] = $userRetrievedFromDatabase['name'];
         $_SESSION['userContext']['user']['email'] = $userRetrievedFromDatabase['email'];
         $_SESSION['userContext']['user']['castration'] = $userRetrievedFromDatabase['castration'];
@@ -115,5 +119,20 @@ class CatController extends Controller
         session_unset();
         session_destroy();
         echo self::authentificationDisplay();
+    }
+
+    /**
+     * Destroy user function
+     * @param int userId
+     */
+    public function destroyUser(int $userId)
+    {
+        Cat::destroy($userId);
+
+        session_unset();
+        session_destroy();
+
+        $data = "Le compte a bien été supprimé";
+        echo $this->render('layout.default', 'templates.connexion', $data);
     }
 }

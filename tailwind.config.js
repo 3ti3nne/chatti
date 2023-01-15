@@ -18,6 +18,7 @@ module.exports = {
       blueVeryClair: "#748C94",
       beige: "#FCF4EC",
       gray: "#ACB4B4",
+      slate: "rgb(203 213 225)",
     },
     extend: {
       fontFamily: {

@@ -53,8 +53,9 @@ class Cat
 
         $request = "SELECT email FROM chats WHERE (email = :email)";
         $statement = $db->prepare($request);
-        if ($statement->execute(array('email' => $data['email']))) {
-            return;
+        $statement->execute(array('email' => $data['email']));
+        if ($statement->fetch() !== false) {
+            return false;
         }
 
 
@@ -100,7 +101,9 @@ class Cat
         LEFT JOIN conversations on chats.chat_id = conversations.conversation_chat_id_one
         LEFT JOIN messages on chats.chat_id = messages.message_chat_id
         WHERE (email = :email)";
+
         $statement = $db->prepare($request);
+
         $statement->execute(array('email' => $userInfos['email']));
 
         if (!$statement) {
@@ -109,10 +112,26 @@ class Cat
 
         $userRetrievedFromDatabase = $statement->fetch($db::FETCH_ASSOC);
 
+
         if (is_array($userRetrievedFromDatabase) && !empty($userRetrievedFromDatabase)) {
             if (password_verify($userInfos['password'], $userRetrievedFromDatabase['password'])) {
                 return $userRetrievedFromDatabase;
             }
         }
+    }
+
+    /**
+     * Destroy user entry in database
+     * @param int $userId
+     */
+    public static function destroy($userId)
+    {
+        $db = Database::getInstance()->getConnexion();
+
+        $request = "DELETE FROM chats WHERE (chat_id = :userId)";
+        $statement = $db->prepare($request);
+        $statement->bindParam(':userId', $userId, $db::PARAM_INT);
+
+        $statement->execute();
     }
 }

@@ -19,6 +19,7 @@ try {
      * $_POST request handling
      */
     if (!empty($_POST)) {
+
         if (isset($_POST['registration']) && !empty($_POST['name'])) {
             $catController = new CatController();
             $catController->insertUser($_POST, $_FILES);
@@ -32,6 +33,11 @@ try {
         if (isset($_POST['logOut'])) {
             $catController = new CatController();
             $catController->logOutUser();
+        }
+
+        if (isset($_POST['destroy']) && $_POST['destroy'] === "oui") {
+            $catController = new CatController();
+            $catController->destroyUser($_POST['userId']);
         }
     }
 

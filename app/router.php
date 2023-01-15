@@ -21,7 +21,7 @@ try {
     if (!empty($_POST)) {
         if (isset($_POST['registration']) && !empty($_POST['name'])) {
             $catController = new CatController();
-            $catController->insertUser($_POST);
+            $catController->insertUser($_POST, $_FILES);
         }
 
         if (isset($_POST['login']) && !empty($_POST['email'])) {

@@ -18,10 +18,7 @@
     </form>
      -->
 
-    <?php
-    echo "<pre>";
-    print_r($_SESSION);
-    echo "</pre>"; ?>
+
     <form action="/" method="POST">
         <input type="hidden" name="logOut">
         <button class="overflow-hidden text-sm font-medium">

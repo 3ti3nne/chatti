@@ -34,6 +34,19 @@
             </div>
 
             <div class="form-group mb-6">
+                <?php
+                if ($data) {
+                ?>
+                    <div class="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-gray-800 dark:text-red-400" role="alert">
+                        <?= $data ?>
+                    </div>
+                <?php
+                }
+                ?>
+                <input name="picture" required type="file" class="form-control block w-full mx-auto md:w-3/4 px-3 py-1.5 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:bg-white focus:border-roseClair focus:ring-0" id="picture" placeholder="Photo">
+            </div>
+
+            <div class="form-group mb-6">
                 <input name="email" type="email" required class="form-control block w-full mx-auto md:w-3/4 px-3 py-1.5 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:bg-white focus:border-roseClair focus:ring-0" id="email" placeholder="Email">
             </div>
 

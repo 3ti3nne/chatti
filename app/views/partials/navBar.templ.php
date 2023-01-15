@@ -20,7 +20,7 @@
                 <?php
                 if (isset($_SESSION['userContext']['user']['picture']) && !empty($_SESSION['userContext']['user']['picture'])) {
                 ?>
-                    <img class="w-24 h-24 rounded-full shadow-lg object-cover border-2" src="<?= $_SESSION['userContext']['user']['picture'] ?>" alt="" />
+                    <img class="w-24 h-24 rounded-full shadow-lg object-cover border-2" src="data:image/jpeg;base64,<?= base64_encode($_SESSION['userContext']['user']['picture']) ?>" alt="" />
                 <?php
                 } else {
                 ?>

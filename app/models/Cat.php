@@ -13,9 +13,10 @@ class Cat
     private int $castration;
     private int $genre;
     private string $description;
+    private string $picture;
 
 
-    public function __construct(array $userInfos)
+    public function __construct(array $userInfos, string $userPicture)
     {
         $this->name = $userInfos['name'];
         $this->email = $userInfos['email'];
@@ -24,6 +25,7 @@ class Cat
         $this->castration = $userInfos['castration'];
         $this->genre = $userInfos['genre'];
         $this->description = $userInfos['description'];
+        $this->picture = $userPicture;
 
         return $this;
     }
@@ -48,6 +50,15 @@ class Cat
         ///PUT A FUNCTION TO SELECT AND CHECKS IF EMAIL ALREADY EXISTS
         $db = Database::getInstance()->getConnexion();
 
+
+        $request = "SELECT email FROM chats WHERE (email = :email)";
+        $statement = $db->prepare($request);
+        if ($statement->execute(array('email' => $data['email']))) {
+            return;
+        }
+
+
+
         $request = "INSERT INTO chats(name, email, password, age, castration, genre, description)VALUES(:name, :email, :password, :age, :castration, :genre, :description)";
         $statement = $db->prepare($request);
 
@@ -58,6 +69,18 @@ class Cat
         $statement->bindParam(':castration', $data['castration'], $db::PARAM_INT);
         $statement->bindParam(':genre', $data['genre'], $db::PARAM_INT);
         $statement->bindParam(':description', $data['description'], $db::PARAM_STR, 100);
+
+        $statement->execute();
+
+        //Checks last inserted id to insert picture in database with foreign key
+
+        $catRegisteringId = $db->lastInsertId();
+
+        $request = "INSERT INTO photos(photo, photo_chat_id)VALUES(:photo, :photo_chat_id)";
+        $statement = $db->prepare($request);
+
+        $statement->bindParam(':photo', $data['picture'], $db::PARAM_STR, 100);
+        $statement->bindParam(':photo_chat_id', $catRegisteringId, $db::PARAM_INT);
 
         $statement->execute();
     }

@@ -4235,14 +4235,6 @@ textarea.form-control.is-invalid {
   margin-top: 0.5rem;
 }
 
-.mb-5 {
-  margin-bottom: 1.25rem;
-}
-
-.mt-1 {
-  margin-top: 0.25rem;
-}
-
 .block {
   display: block;
 }
@@ -4613,9 +4605,9 @@ textarea.form-control.is-invalid {
   background-color: rgb(31 41 55 / var(--tw-bg-opacity));
 }
 
-.bg-gray-50 {
+.bg-red-100 {
   --tw-bg-opacity: 1;
-  background-color: rgb(249 250 251 / var(--tw-bg-opacity));
+  background-color: rgb(253 232 232 / var(--tw-bg-opacity));
 }
 
 .bg-opacity-50 {
@@ -4829,11 +4821,6 @@ textarea.form-control.is-invalid {
   line-height: 1.5rem;
 }
 
-.text-xs {
-  font-size: 0.75rem;
-  line-height: 1rem;
-}
-
 .font-bold {
   font-weight: 700;
 }
@@ -4901,6 +4888,11 @@ textarea.form-control.is-invalid {
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.text-red-700 {
+  --tw-text-opacity: 1;
+  color: rgb(200 30 30 / var(--tw-text-opacity));
 }
 
 .opacity-80 {
@@ -4999,26 +4991,6 @@ textarea.form-control.is-invalid {
   /* IE and Edge */
   scrollbar-width: none;
   /* Firefox */
-}
-
-.file\:border-gray-300::file-selector-button {
-  --tw-border-opacity: 1;
-  border-color: rgb(209 213 219 / var(--tw-border-opacity));
-}
-
-.file\:bg-roseClair::file-selector-button {
-  --tw-bg-opacity: 1;
-  background-color: rgb(255 180 180 / var(--tw-bg-opacity));
-}
-
-.file\:bg-white::file-selector-button {
-  --tw-bg-opacity: 1;
-  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
-}
-
-.file\:text-roseClair::file-selector-button {
-  --tw-text-opacity: 1;
-  color: rgb(255 180 180 / var(--tw-text-opacity));
 }
 
 .hover\:border-gray-300:hover {
@@ -5218,14 +5190,9 @@ textarea.form-control.is-invalid {
   color: rgb(63 131 248 / var(--tw-text-opacity));
 }
 
-.dark .dark\:placeholder-gray-400::-moz-placeholder {
-  --tw-placeholder-opacity: 1;
-  color: rgb(156 163 175 / var(--tw-placeholder-opacity));
-}
-
-.dark .dark\:placeholder-gray-400::placeholder {
-  --tw-placeholder-opacity: 1;
-  color: rgb(156 163 175 / var(--tw-placeholder-opacity));
+.dark .dark\:text-red-400 {
+  --tw-text-opacity: 1;
+  color: rgb(249 128 128 / var(--tw-text-opacity));
 }
 
 .dark .dark\:hover\:bg-gray-700:hover {
@@ -5281,14 +5248,6 @@ textarea.form-control.is-invalid {
 @media (min-width: 768px) {
   .md\:relative {
     position: relative;
-  }
-
-  .md\:mt-56 {
-    margin-top: 14rem;
-  }
-
-  .md\:mt-10 {
-    margin-top: 2.5rem;
   }
 
   .md\:mt-32 {

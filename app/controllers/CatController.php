@@ -52,11 +52,36 @@ class CatController extends Controller
      * 
      * Get private object vars to an array and insert into database
      */
-    public function insertUser($registeringCatInfos)
+    public function insertUser($registeringCatInfos, $registeringCatPicture)
     {
-        $cat = new Cat($registeringCatInfos);
-        $infos = $cat->getObject();
-        $cat->insert($infos);
+        $error = null;
+
+        //Verify picture
+        if (isset($registeringCatPicture) && $registeringCatPicture['picture']['error'] === 0) {
+            if ($registeringCatPicture['picture']['size'] <= 1000000) {
+
+                $allowedExtensions = ['jpg', 'jpeg'];
+
+                $pathInfo = pathinfo($registeringCatPicture['picture']['name'],  PATHINFO_EXTENSION);
+                if (in_array($pathInfo, $allowedExtensions)) {
+
+                    $registeringCatPicture = file_get_contents($registeringCatPicture['picture']['tmp_name']);
+
+                    $cat = new Cat($registeringCatInfos, $registeringCatPicture);
+                    $infos = $cat->getObject();
+                    $cat->insert($infos);
+                } else {
+                    $error = "Le format de l'image n'est pas accepté !";
+                    echo $this->render('layout.default', 'templates.registration', $error);
+                }
+            } else {
+                $error = "L'image est trop volumineuse !";
+                echo $this->render('layout.default', 'templates.registration', $error);
+            }
+        } else {
+            $error = "L'image n'est pas valide !";
+            echo $this->render('layout.default', 'templates.registration', $error);
+        }
     }
 
     public function loginUser(array $userInfos)
@@ -71,9 +96,6 @@ class CatController extends Controller
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
-        echo "<pre>";
-        print_r($userRetrievedFromDatabase);
-        echo "</pre>";
 
         $_SESSION['userContext']['user']['id'] = $userRetrievedFromDatabase['chat_id'];
         $_SESSION['userContext']['user']['name'] = $userRetrievedFromDatabase['name'];
@@ -81,6 +103,7 @@ class CatController extends Controller
         $_SESSION['userContext']['user']['castration'] = $userRetrievedFromDatabase['castration'];
         $_SESSION['userContext']['user']['age'] = $userRetrievedFromDatabase['age'];
         $_SESSION['userContext']['user']['description'] = $userRetrievedFromDatabase['description'];
+        $_SESSION['userContext']['user']['picture'] = $userRetrievedFromDatabase['photo'];
     }
 
     /**

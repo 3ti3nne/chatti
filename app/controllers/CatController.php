@@ -70,7 +70,7 @@ class CatController extends Controller
 
                     $cat = new Cat($registeringCatInfos, $registeringCatPicture);
                     $infos = $cat->getObject();
-                    if (!($cat->insert($infos))) {
+                    if (!$cat->insert($infos)) {
                         $error = "Cet email est déjà utilisé !";
                         echo $this->render('layout.default', 'templates.registration', $error);
                     };

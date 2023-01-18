@@ -138,4 +138,40 @@ class Cat
 
         $statement->execute();
     }
+
+    /**
+     * Update email
+     * 
+     */
+
+    /**
+     * Update password
+     * 
+     */
+
+    /**
+     * Update description
+     * 
+     */
+
+
+    /**
+     * 
+     * Fetch users to create Love Cats Users
+     */
+    public static function fetchLoveCats()
+    {
+
+        $db = Database::getInstance()->getConnexion();
+
+        $request = "SELECT chats.chat_id, chats.name, chats.age, chats.castration, chats.genre, chats.description, photos.photo
+        FROM chats
+        LEFT JOIN photos on chats.chat_id = photos.photo_chat_id
+        ORDER BY RAND()";
+        $statement = $db->prepare($request);
+
+        $statement->execute();
+
+        return $statement->fetchAll($db::FETCH_ASSOC);
+    }
 }

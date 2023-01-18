@@ -63,7 +63,9 @@ try {
 
                 case '/':
                     $catController = new CatController();
-                    echo $catController->homeDisplay();
+                    $catsArray = $catController->fetchLoveCatsToCreateCards();
+
+                    echo $catController->homeDisplay($catsArray);
                     break;
 
                 case '/profile':
@@ -101,4 +103,17 @@ try {
 
     $controller = new Controller;
     echo $controller->render($lay, 'templates.error', $error->getMessage());
+}
+
+
+/*
+ * Gestion des appels avec AJAX fetch.
+ */
+
+// On récupère le flux JSON posté.
+$json = file_get_contents('php://input');
+// On convertit le flux JSON en tableau d'objets.
+$data = json_decode($json);
+// On route vers le controller "Annonces" et la méthode d'affichage d'une annonce "annonceDisplay".
+if (!empty($data)) {
 }

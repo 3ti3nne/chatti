@@ -32,9 +32,9 @@ class CatController extends Controller
         return $this->render('layout.default', 'templates.profile');
     }
 
-    public function homeDisplay()
+    public function homeDisplay($data)
     {
-        return $this->render('layout.default', 'templates.home');
+        return $this->render('layout.default', 'templates.home', $data);
     }
 
     public function chatDisplay()
@@ -88,6 +88,11 @@ class CatController extends Controller
         }
     }
 
+
+    /**
+     * Log users after retrieving password and comparing with $_POST
+     * Create $_SESSION with infos from database
+     */
     public function loginUser(array $userInfos)
     {
         $userRetrievedFromDatabase = Cat::login($userInfos);
@@ -109,6 +114,9 @@ class CatController extends Controller
         $_SESSION['userContext']['user']['description'] = $userRetrievedFromDatabase['description'];
         $_SESSION['userContext']['user']['picture'] = $userRetrievedFromDatabase['photo'];
     }
+
+
+
 
     /**
      * Logout function
@@ -134,5 +142,11 @@ class CatController extends Controller
 
         $data = "Le compte a bien été supprimé";
         echo $this->render('layout.default', 'templates.connexion', $data);
+    }
+
+
+    public function fetchLoveCatsToCreateCards()
+    {
+        return Cat::fetchLoveCats();
     }
 }

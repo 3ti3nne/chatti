@@ -1,5 +1,4 @@
 let d = document;
-
 /**
  * Setting navBar menu and button for mobile navigation.
  */

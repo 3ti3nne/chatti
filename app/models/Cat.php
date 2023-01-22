@@ -53,7 +53,8 @@ class Cat
 
         $request = "SELECT email FROM chats WHERE (email = :email)";
         $statement = $db->prepare($request);
-        $statement->execute(array('email' => $data['email']));
+        $statement->bindParam(':email', $data['email'], $db::PARAM_STR, 50);
+        $statement->execute();
         $statement = $statement->fetch();
 
         if (is_array($statement) && !empty($statement)) {
@@ -167,11 +168,12 @@ class Cat
         $request = "SELECT chats.chat_id, chats.name, chats.age, chats.castration, chats.genre, chats.description, photos.photo
         FROM chats
         LEFT JOIN photos on chats.chat_id = photos.photo_chat_id
-        ORDER BY RAND()";
+        ORDER BY RAND()
+        LIMIT 1";
         $statement = $db->prepare($request);
 
         $statement->execute();
 
-        return $statement->fetchAll($db::FETCH_ASSOC);
+        return $statement->fetch($db::FETCH_ASSOC);
     }
 }

@@ -145,7 +145,7 @@ class CatController extends Controller
     }
 
 
-    public function fetchLoveCatsToCreateCards()
+    public function fetchLoveCatsToCreateCard()
     {
         return Cat::fetchLoveCats();
     }

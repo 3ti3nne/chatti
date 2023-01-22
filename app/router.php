@@ -63,9 +63,8 @@ try {
 
                 case '/':
                     $catController = new CatController();
-                    $catsArray = $catController->fetchLoveCatsToCreateCards();
-
-                    echo $catController->homeDisplay($catsArray);
+                    $catArrayCard = $catController->fetchLoveCatsToCreateCard();
+                    echo $catController->homeDisplay($catArrayCard);
                     break;
 
                 case '/profile':

@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/style.css">
+    <link rel="icon" type="image/png" href="./imgs/logo.png" />
     <title>{headTitle}</title>
 </head>
 
@@ -15,7 +16,7 @@
         <?php
         require_once(__DIR__ . '/../partials/navBar.templ.php');
         ?>
-        <div id="content" class="flex flex-1 items-center justify-center bg-center bg-cover py-10 min-h-screen" style="background-image: url(./imgs/backgroundPaws.svg);">
+        <div id="content" class="flex flex-1 md:items-center justify-center bg-center bg-cover py-10" style="background-image: url(./imgs/backgroundPaws.svg);">
             {content}
         </div>
     </main>

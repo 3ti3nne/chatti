@@ -5,7 +5,8 @@
  */
 
 use Chatti\controllers\Controller;
-use Chatti\CatController\CatController;
+use Chatti\controllers\CatController;
+use Chatti\controllers\LikeController;
 
 $uri = $_SERVER['REQUEST_URI'];
 $lay = 'layout.default';
@@ -39,6 +40,17 @@ try {
             $catController = new CatController();
             $catController->destroyUser($_POST['userId']);
         }
+
+        if (isset($_POST['likeValue']) && !empty($_POST['fromCatId'])) {
+            $catController = new CatController();
+            $likeController = new LikeController();
+
+            $likeController->checkLikeAndInsert($_POST);
+
+            $catArrayCard = $catController->fetchLoveCatsToCreateCard();
+
+            echo $catController->render($lay, 'templates.home', $catArrayCard);
+        }
     }
 
 
@@ -64,27 +76,27 @@ try {
                 case '/':
                     $catController = new CatController();
                     $catArrayCard = $catController->fetchLoveCatsToCreateCard();
-                    echo $catController->homeDisplay($catArrayCard);
+                    echo $catController->render($lay, 'templates.home', $catArrayCard);
                     break;
 
                 case '/profile':
                     $catController = new CatController();
-                    echo $catController->profileDisplay();
+                    echo $catController->render($lay, 'templates.profile');
                     break;
 
                 case '/settings':
                     $catController = new CatController();
-                    echo $catController->settingsDisplay();
+                    echo $catController->render($lay, 'templates.settings');
                     break;
 
                 case  '/chat':
                     $catController = new CatController();
-                    echo $catController->chatDisplay();
+                    echo $catController->render($lay, 'templates.chat');
                     break;
 
                 case '/about':
                     $catController = new CatController();
-                    echo $catController->aboutDisplay();
+                    echo $catController->render($lay, 'templates.about');
                     break;
 
                 default:
@@ -97,7 +109,7 @@ try {
 
     $controller = new Controller;
     $errorMessage = 'Chat marche pas !';
-    echo $controller->render($lay, 'templates.error', $errorMessage);
+    echo $controller->render($lay, 'templates.error', $error->getMessage());
 } catch (Exception $error) {
 
     $controller = new Controller;

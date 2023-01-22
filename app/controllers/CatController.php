@@ -1,8 +1,8 @@
 <?php
 
-namespace Chatti\CatController;
+namespace Chatti\controllers;
 
-use Chatti\Cat\Cat;
+use Chatti\models\Cat;
 use Chatti\controllers\Controller;
 
 /**
@@ -12,40 +12,6 @@ use Chatti\controllers\Controller;
 class CatController extends Controller
 {
 
-    public function authentificationDisplay()
-    {
-        return $this->render('layout.default', 'templates.connexion');
-    }
-
-    public function registrationDisplay()
-    {
-        return $this->render('layout.default', 'templates.registration');
-    }
-
-    public function settingsDisplay()
-    {
-        return $this->render('layout.default', 'templates.settings');
-    }
-
-    public function profileDisplay()
-    {
-        return $this->render('layout.default', 'templates.profile');
-    }
-
-    public function homeDisplay($data)
-    {
-        return $this->render('layout.default', 'templates.home', $data);
-    }
-
-    public function chatDisplay()
-    {
-        return $this->render('layout.default', 'templates.chat');
-    }
-
-    public function aboutDisplay()
-    {
-        return $this->render('layout.default', 'templates.about');
-    }
 
     /**
      * @param array
@@ -55,6 +21,7 @@ class CatController extends Controller
      */
     public function insertUser(array $registeringCatInfos, array $registeringCatPicture)
     {
+
         $error = null;
 
         //Verify picture
@@ -69,7 +36,10 @@ class CatController extends Controller
                     $registeringCatPicture = file_get_contents($registeringCatPicture['picture']['tmp_name']);
 
                     $cat = new Cat($registeringCatInfos, $registeringCatPicture);
-                    $infos = $cat->getObject();
+
+
+                    $infos = $cat->getObjectVars();
+
                     if (!$cat->insert($infos)) {
                         $error = "Cet email est déjà utilisé !";
                         echo $this->render('layout.default', 'templates.registration', $error);
@@ -106,7 +76,7 @@ class CatController extends Controller
             session_start();
         }
 
-        $_SESSION['userContext']['user']['id'] = (int)$userRetrievedFromDatabase['chat_id'];
+        $_SESSION['userContext']['user']['id'] = (int)$userRetrievedFromDatabase['cat_id'];
         $_SESSION['userContext']['user']['name'] = $userRetrievedFromDatabase['name'];
         $_SESSION['userContext']['user']['email'] = $userRetrievedFromDatabase['email'];
         $_SESSION['userContext']['user']['castration'] = $userRetrievedFromDatabase['castration'];
@@ -126,7 +96,7 @@ class CatController extends Controller
     {
         session_unset();
         session_destroy();
-        echo self::authentificationDisplay();
+        echo $this->render('layout.default', 'templates.connexion');
     }
 
     /**

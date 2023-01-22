@@ -1,10 +1,11 @@
 <?php
 
-namespace Chatti\Cat;
+namespace Chatti\models;
 
+use Chatti\models\Model;
 use Chatti\utilities\Database;
 
-class Cat
+class Cat extends Model
 {
     private string $name;
     private string $password;
@@ -33,11 +34,12 @@ class Cat
     /**
      * Get object private variables
      */
-    public function getObject(): array
+    public function getObjectVars(): array
     {
-        $catArray = get_object_vars($this);
-        return $catArray;
+        $array = get_object_vars($this);
+        return $array;
     }
+
 
     /**
      * Insert new user with informations from the object Cat, created after register's form passed Model
@@ -51,7 +53,7 @@ class Cat
         $db = Database::getInstance()->getConnexion();
 
 
-        $request = "SELECT email FROM chats WHERE (email = :email)";
+        $request = "SELECT email FROM cats WHERE (email = :email)";
         $statement = $db->prepare($request);
         $statement->bindParam(':email', $data['email'], $db::PARAM_STR, 50);
         $statement->execute();
@@ -62,7 +64,7 @@ class Cat
         } else {
 
 
-            $request = "INSERT INTO chats(name, email, password, age, castration, genre, description)VALUES(:name, :email, :password, :age, :castration, :genre, :description)";
+            $request = "INSERT INTO cats(name, email, password, age, castration, genre, description)VALUES(:name, :email, :password, :age, :castration, :genre, :description)";
             $statement = $db->prepare($request);
 
             $statement->bindParam(':name', $data['name'], $db::PARAM_STR, 30);
@@ -79,11 +81,11 @@ class Cat
 
             $catRegisteringId = $db->lastInsertId();
 
-            $request = "INSERT INTO photos(photo, photo_chat_id)VALUES(:photo, :photo_chat_id)";
+            $request = "INSERT INTO photos(photo, photo_cat_id)VALUES(:photo, :photo_cat_id)";
             $statement = $db->prepare($request);
 
             $statement->bindParam(':photo', $data['picture'], $db::PARAM_STR, 100);
-            $statement->bindParam(':photo_chat_id', $catRegisteringId, $db::PARAM_INT);
+            $statement->bindParam(':photo_cat_id', $catRegisteringId, $db::PARAM_INT);
 
             $statement->execute();
 
@@ -100,11 +102,11 @@ class Cat
     {
         $db = Database::getInstance()->getConnexion();
 
-        $request = "SELECT * FROM chats
-        LEFT JOIN photos on chats.chat_id = photos.photo_chat_id
-        LEFT JOIN likes on chats.chat_id = likes.from_chat_id
-        LEFT JOIN conversations on chats.chat_id = conversations.conversation_chat_id_one
-        LEFT JOIN messages on chats.chat_id = messages.message_chat_id
+        $request = "SELECT * FROM cats
+        LEFT JOIN photos on cats.cat_id = photos.photo_cat_id
+        LEFT JOIN likes on cats.cat_id = likes.from_cat_id
+        LEFT JOIN conversations on cats.cat_id = conversations.conversation_cat_id_one
+        LEFT JOIN messages on cats.cat_id = messages.message_cat_id
         WHERE (email = :email)";
 
         $statement = $db->prepare($request);
@@ -133,7 +135,7 @@ class Cat
     {
         $db = Database::getInstance()->getConnexion();
 
-        $request = "DELETE FROM chats WHERE (chat_id = :userId)";
+        $request = "DELETE FROM cats WHERE (cat_id = :userId)";
         $statement = $db->prepare($request);
         $statement->bindParam(':userId', $userId, $db::PARAM_INT);
 
@@ -157,17 +159,17 @@ class Cat
 
 
     /**
-     * 
      * Fetch users to create Love Cats Users
+     * 
      */
     public static function fetchLoveCats()
     {
 
         $db = Database::getInstance()->getConnexion();
 
-        $request = "SELECT chats.chat_id, chats.name, chats.age, chats.castration, chats.genre, chats.description, photos.photo
-        FROM chats
-        LEFT JOIN photos on chats.chat_id = photos.photo_chat_id
+        $request = "SELECT cats.cat_id, cats.name, cats.age, cats.castration, cats.genre, cats.description, photos.photo
+        FROM cats
+        LEFT JOIN photos on cats.cat_id = photos.photo_cat_id
         ORDER BY RAND()
         LIMIT 1";
         $statement = $db->prepare($request);

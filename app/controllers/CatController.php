@@ -72,10 +72,6 @@ class CatController extends Controller
             echo $this->render('layout.default', 'templates.connexion', $userRetrievedFromDatabase);
         }
 
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-
         $_SESSION['userContext']['user']['id'] = (int)$userRetrievedFromDatabase['cat_id'];
         $_SESSION['userContext']['user']['name'] = $userRetrievedFromDatabase['name'];
         $_SESSION['userContext']['user']['email'] = $userRetrievedFromDatabase['email'];
@@ -83,6 +79,8 @@ class CatController extends Controller
         $_SESSION['userContext']['user']['age'] = $userRetrievedFromDatabase['age'];
         $_SESSION['userContext']['user']['description'] = $userRetrievedFromDatabase['description'];
         $_SESSION['userContext']['user']['picture'] = $userRetrievedFromDatabase['photo'];
+
+        echo $this->render('layout.default', 'templates.home');
     }
 
 
@@ -112,11 +110,5 @@ class CatController extends Controller
 
         $data = "Le compte a bien été supprimé";
         echo $this->render('layout.default', 'templates.connexion', $data);
-    }
-
-
-    public function fetchLoveCatsToCreateCard()
-    {
-        return Cat::fetchLoveCats();
     }
 }

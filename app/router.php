@@ -4,6 +4,7 @@
  * Will get $_POST, $_GET and AJAX and redirect
  */
 
+use Chatti\models\Cat;
 use Chatti\controllers\Controller;
 use Chatti\controllers\CatController;
 use Chatti\controllers\LikeController;
@@ -14,7 +15,33 @@ $lay = 'layout.default';
 session_start();
 
 
+
 try {
+
+    /*
+     * Gestion des appels avec AJAX fetch.
+     */
+
+    // On récupère le flux JSON posté.
+    $json = file_get_contents('php://input');
+    // On convertit le flux JSON en tableau d'objets.
+    $data = json_decode($json);
+    // On route vers le controller "Annonces" et la méthode d'affichage d'une annonce "annonceDisplay".
+    if (!empty($data)) {
+        if (isset($data->getProfile)) {
+            $catProfile = Cat::fetchLoveCats();
+            echo json_encode($catProfile);
+            exit();
+        }
+        if (isset($data->action) && $data->action === 'like') {
+            $like = new LikeController();
+            $like->checkLikeAndInsert(
+                $data->response,
+                $data->likedUser,
+                $_SESSION['userContext']['user']['id']
+            );
+        }
+    }
 
     /**
      * $_POST request handling
@@ -24,24 +51,28 @@ try {
         if (isset($_POST['registration']) && !empty($_POST['name'])) {
             $catController = new CatController();
             $catController->insertUser($_POST, $_FILES);
+            exit();
         }
 
         if (isset($_POST['login']) && !empty($_POST['email'])) {
             $catController = new CatController();
             $catController->loginUser($_POST);
+            exit();
         }
 
         if (isset($_POST['logOut'])) {
             $catController = new CatController();
             $catController->logOutUser();
+            exit();
         }
 
         if (isset($_POST['destroy']) && $_POST['destroy'] === "oui") {
             $catController = new CatController();
             $catController->destroyUser($_POST['userId']);
+            exit();
         }
 
-        if (isset($_POST['likeValue']) && !empty($_POST['fromCatId'])) {
+        /* if (isset($_POST['likeValue']) && !empty($_POST['fromCatId'])) {
             $catController = new CatController();
             $likeController = new LikeController();
 
@@ -50,7 +81,7 @@ try {
             $catArrayCard = $catController->fetchLoveCatsToCreateCard();
 
             echo $catController->render($lay, 'templates.home', $catArrayCard);
-        }
+        } */
     }
 
 
@@ -60,6 +91,7 @@ try {
     if (!isset($_SESSION['userContext']['user']['name']) && ($uri === '/register')) {
         $catController = new CatController();
         echo $catController->render($lay, 'templates.registration');
+        exit();
     }
 
 
@@ -75,8 +107,7 @@ try {
 
                 case '/':
                     $catController = new CatController();
-                    $catArrayCard = $catController->fetchLoveCatsToCreateCard();
-                    echo $catController->render($lay, 'templates.home', $catArrayCard);
+                    echo $catController->render($lay, 'templates.home');
                     break;
 
                 case '/profile':
@@ -114,17 +145,4 @@ try {
 
     $controller = new Controller;
     echo $controller->render($lay, 'templates.error', $error->getMessage());
-}
-
-
-/*
- * Gestion des appels avec AJAX fetch.
- */
-
-// On récupère le flux JSON posté.
-$json = file_get_contents('php://input');
-// On convertit le flux JSON en tableau d'objets.
-$data = json_decode($json);
-// On route vers le controller "Annonces" et la méthode d'affichage d'une annonce "annonceDisplay".
-if (!empty($data)) {
 }

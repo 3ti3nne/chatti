@@ -176,6 +176,9 @@ class Cat extends Model
 
         $statement->execute();
 
-        return $statement->fetch($db::FETCH_ASSOC);
+        $catProfile = $statement->fetch($db::FETCH_ASSOC);
+        $catProfile['photo'] = base64_encode($catProfile['photo']);
+
+        return $catProfile;
     }
 }

@@ -11,11 +11,11 @@ class Like extends Model
     private int $toCatId;
     private int $likeValue;
 
-    public function __construct(array $data)
+    public function __construct(int $likeValue, int $toCatId, int $fromCatId)
     {
-        $this->fromCatId = $data['fromCatId'];
-        $this->toCatId = $data['toCatId'];
-        $this->likeValue = $data['likeValue'];
+        $this->fromCatId = $fromCatId;
+        $this->toCatId = $toCatId;
+        $this->likeValue = $likeValue;
 
         return $this;
     }

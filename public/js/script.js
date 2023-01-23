@@ -1,4 +1,6 @@
-let d = document;
+if (typeof d !== "undefined") {
+  let d = document;
+}
 /**
  * Setting navBar menu and button for mobile navigation.
  */

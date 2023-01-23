@@ -43,8 +43,9 @@
             <div class="flex flex-col justify-center pl-5">
                 <?php if (isset($_SESSION['userContext']['user']['name'])) {
                 ?>
-                    <h5 class="mb-1 text-2xl font-bold dark:text-white"><?= $_SESSION['userContext']['user']['name'];
-                                                                    } ?>
+                    <h5 class="mb-1 text-2xl font-bold dark:text-white">
+                    <?= $_SESSION['userContext']['user']['name'];
+                } ?>
                     </h5>
                     <a class="text-xl rounded-lg p-2 dark:text-gray-400 hover:bg-rose" href="/profile">Voir le profil</a>
             </div>

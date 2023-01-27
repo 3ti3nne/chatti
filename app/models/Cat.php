@@ -17,6 +17,7 @@ class Cat extends Model
     private string $picture;
 
 
+
     public function __construct(array $userInfos, string $userPicture)
     {
         $this->name = $userInfos['name'];
@@ -27,12 +28,12 @@ class Cat extends Model
         $this->genre = $userInfos['genre'];
         $this->description = $userInfos['description'];
         $this->picture = $userPicture;
-
-        return $this;
     }
+
 
     /**
      * Get object private variables
+     * @return array
      */
     public function getObjectVars(): array
     {
@@ -43,19 +44,20 @@ class Cat extends Model
 
     /**
      * Insert new user with informations from the object Cat, created after register's form passed Model
-     * @param array $data 
-     * @return bool, throw PDOException if false
+     * Change object into array before sending it to database
+     * @param array $dataFromUser 
+     * @return bool, throw PDOException if insert went wrong.
      */
-    public function insert(array $data)
+    public function insert(object $dataFromUser): bool
     {
 
-        ///PUT A FUNCTION TO SELECT AND CHECKS IF EMAIL ALREADY EXISTS
-        $db = Database::getInstance()->getConnexion();
+        $dataFromUser = self::getObjectVars($dataFromUser);
 
+        $db = Database::getInstance()->getConnexion();
 
         $request = "SELECT email FROM cats WHERE (email = :email)";
         $statement = $db->prepare($request);
-        $statement->bindParam(':email', $data['email'], $db::PARAM_STR, 50);
+        $statement->bindParam(':email', $dataFromUser['email'], $db::PARAM_STR, 50);
         $statement->execute();
         $statement = $statement->fetch();
 
@@ -67,25 +69,25 @@ class Cat extends Model
             $request = "INSERT INTO cats(name, email, password, age, castration, genre, description)VALUES(:name, :email, :password, :age, :castration, :genre, :description)";
             $statement = $db->prepare($request);
 
-            $statement->bindParam(':name', $data['name'], $db::PARAM_STR, 30);
-            $statement->bindParam(':email', $data['email'], $db::PARAM_STR, 50);
-            $statement->bindParam(':password', $data['password'], $db::PARAM_STR, 100);
-            $statement->bindParam(':age', $data['age'], $db::PARAM_INT);
-            $statement->bindParam(':castration', $data['castration'], $db::PARAM_INT);
-            $statement->bindParam(':genre', $data['genre'], $db::PARAM_INT);
-            $statement->bindParam(':description', $data['description'], $db::PARAM_STR, 100);
+            $statement->bindParam(':name', $dataFromUser['name'], $db::PARAM_STR, 30);
+            $statement->bindParam(':email', $dataFromUser['email'], $db::PARAM_STR, 50);
+            $statement->bindParam(':password', $dataFromUser['password'], $db::PARAM_STR, 100);
+            $statement->bindParam(':age', $dataFromUser['age'], $db::PARAM_INT);
+            $statement->bindParam(':castration', $dataFromUser['castration'], $db::PARAM_INT);
+            $statement->bindParam(':genre', $dataFromUser['genre'], $db::PARAM_INT);
+            $statement->bindParam(':description', $dataFromUser['description'], $db::PARAM_STR, 100);
 
             $statement->execute();
 
             //Checks last inserted id to insert picture in database with foreign key
 
-            $catRegisteringId = $db->lastInsertId();
+            $userRegisteringId = $db->lastInsertId();
 
             $request = "INSERT INTO photos(photo, photo_cat_id)VALUES(:photo, :photo_cat_id)";
             $statement = $db->prepare($request);
 
-            $statement->bindParam(':photo', $data['picture'], $db::PARAM_STR, 100);
-            $statement->bindParam(':photo_cat_id', $catRegisteringId, $db::PARAM_INT);
+            $statement->bindParam(':photo', $dataFromUser['picture'], $db::PARAM_STR, 100);
+            $statement->bindParam(':photo_cat_id', $userRegisteringId, $db::PARAM_INT);
 
             $statement->execute();
 
@@ -96,10 +98,12 @@ class Cat extends Model
     /**
      * Login user after comparison
      * 
-     * @return array||void
+     * @param array $userInfos
+     * @return array||bool
      */
-    public static function login($userInfos)
+    public static function login(array $userInfos)
     {
+
         $db = Database::getInstance()->getConnexion();
 
         $request = "SELECT * FROM cats
@@ -110,15 +114,15 @@ class Cat extends Model
         WHERE (email = :email)";
 
         $statement = $db->prepare($request);
+        $statement->bindParam(':email', $userInfos['email'], $db::PARAM_STR, 50);
 
         $statement->execute(array('email' => $userInfos['email']));
 
         if (!$statement) {
-            return;
+            return false;
         }
 
         $userRetrievedFromDatabase = $statement->fetch($db::FETCH_ASSOC);
-
 
         if (is_array($userRetrievedFromDatabase) && !empty($userRetrievedFromDatabase)) {
             if (password_verify($userInfos['password'], $userRetrievedFromDatabase['password'])) {
@@ -135,11 +139,14 @@ class Cat extends Model
     {
         $db = Database::getInstance()->getConnexion();
 
-        $request = "DELETE FROM cats WHERE (cat_id = :userId)";
-        $statement = $db->prepare($request);
-        $statement->bindParam(':userId', $userId, $db::PARAM_INT);
+        if (isset($_SESSION['userContext']['user']['name']) && !empty($_SESSION['userContext']['user']['name'])) {
 
-        $statement->execute();
+            $request = "DELETE FROM cats WHERE (cat_id = :userId)";
+            $statement = $db->prepare($request);
+            $statement->bindParam(':userId', $userId, $db::PARAM_INT);
+
+            $statement->execute();
+        }
     }
 
     /**
@@ -177,6 +184,7 @@ class Cat extends Model
         $statement->execute();
 
         $catProfile = $statement->fetch($db::FETCH_ASSOC);
+
         $catProfile['photo'] = base64_encode($catProfile['photo']);
 
         return $catProfile;

@@ -25,7 +25,7 @@
             <?php
             }
             ?>
-            <p class="text-gray-800 mt-6 text-center">Pas encore de compte? <a href="/register" class="p-2 text-lg font-semibold text-rose transition duration-200 ease-in-out">S'enregistrer</a>
+            <p class="text-gray-800 mt-6 text-center">Pas encore de compte ? <a href="/register" class="p-2 text-lg font-semibold text-rose transition duration-200 ease-in-out">S'enregistrer</a>
             </p>
         </form>
     </div>

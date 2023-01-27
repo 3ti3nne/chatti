@@ -18,15 +18,14 @@ session_start();
 
 try {
 
-    /*
-     * Gestion des appels avec AJAX fetch.
+    /**
+     * Ajax handling.
      */
 
-    // On récupère le flux JSON posté.
+    // Get json through PHP
     $json = file_get_contents('php://input');
-    // On convertit le flux JSON en tableau d'objets.
     $data = json_decode($json);
-    // On route vers le controller "Annonces" et la méthode d'affichage d'une annonce "annonceDisplay".
+    // Routing
     if (!empty($data)) {
         if (isset($data->getProfile)) {
             $catProfile = Cat::fetchLoveCats();
@@ -42,6 +41,7 @@ try {
             );
         }
     }
+
 
     /**
      * $_POST request handling
@@ -71,17 +71,6 @@ try {
             $catController->destroyUser($_POST['userId']);
             exit();
         }
-
-        /* if (isset($_POST['likeValue']) && !empty($_POST['fromCatId'])) {
-            $catController = new CatController();
-            $likeController = new LikeController();
-
-            $likeController->checkLikeAndInsert($_POST);
-
-            $catArrayCard = $catController->fetchLoveCatsToCreateCard();
-
-            echo $catController->render($lay, 'templates.home', $catArrayCard);
-        } */
     }
 
 

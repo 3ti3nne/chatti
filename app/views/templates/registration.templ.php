@@ -16,11 +16,11 @@
             ?>
 
             <div class="form-group mb-6">
-                <input name="name" required type="text" class="form-control w-full mx-auto md:w-3/4 block px-3 py-1.5 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:bg-white focus:border-roseClair focus:ring-0" id="name" placeholder="Nom">
+                <input name="name" required pattern="^[A-Za-z]+$" type="text" class="form-control w-full mx-auto md:w-3/4 block px-3 py-1.5 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:bg-white focus:border-roseClair focus:ring-0" id="name" placeholder="Nom">
             </div>
 
             <div class="form-group mb-6">
-                <input name="age" required type="number" class="form-control block w-full mx-auto md:w-3/4 px-3 py-1.5 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:bg-white focus:border-roseClair focus:ring-0" id="age" placeholder="Age">
+                <input name="age" required type="number" min="1" max="30" class="form-control block w-full mx-auto md:w-3/4 px-3 py-1.5 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:bg-white focus:border-roseClair focus:ring-0" id="age" placeholder="Age">
             </div>
 
             <div class="form-group mb-6">
@@ -39,16 +39,17 @@
                 </select>
             </div>
 
-            <div class="form-group mb-6">
+            <div class="form-group mb-4">
                 <textarea name="description" rows="4" class="resize-none form-control block w-full mx-auto md:w-3/4 px-3 py-1.5 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:bg-white focus:border-roseClair focus:ring-0" id="description" placeholder="Une courte description de ses activités préférées, sieste, croquettes.."></textarea>
             </div>
 
             <div class="form-group mb-6">
+                <label for="picture" class="text-gray-400">Formats autorisés : jpeg, jpg</label>
                 <input name="picture" required type="file" class="form-control block w-full mx-auto md:w-3/4 px-3 py-1.5 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:bg-white focus:border-roseClair focus:ring-0" id="picture" placeholder="Photo">
             </div>
 
             <div class="form-group mb-6">
-                <input name="email" type="email" required class="form-control block w-full mx-auto md:w-3/4 px-3 py-1.5 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:bg-white focus:border-roseClair focus:ring-0" id="email" placeholder="Email">
+                <input name="email" type="email" required pattern="^[A-Za-z]+@{1}[A-Za-z]+\.{1}[A-Za-z]{2,}$" class="form-control block w-full mx-auto md:w-3/4 px-3 py-1.5 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:bg-white focus:border-roseClair focus:ring-0" id="email" placeholder="Email">
             </div>
 
             <div class="form-group mb-6">

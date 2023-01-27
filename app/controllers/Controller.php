@@ -38,4 +38,11 @@ class Controller
 
         return $content;
     }
+
+    public function sanitizeData($data)
+    {
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }
 }

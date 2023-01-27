@@ -19,7 +19,9 @@
         <div id="content" class="flex flex-1 md:items-center justify-center bg-center bg-cover py-10" style="background-image: url(./imgs/backgroundPaws.svg);">
             {content}
         </div>
+
     </main>
+
     <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/index.min.js"></script>
     <script src="https://unpkg.com/flowbite@1.6.0/dist/flowbite.min.js"></script>
     <script src="./js/script.js"></script>

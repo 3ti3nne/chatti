@@ -24,6 +24,15 @@ class CatController extends Controller
 
         $error = null;
 
+        //Sanitizing inputs
+
+
+        $registeringCatInfos += [
+            'name' => $this->sanitizeData($registeringCatInfos['name']),
+            'email' => $this->sanitizeData($registeringCatInfos['email']),
+            'description' => $this->sanitizeData($registeringCatInfos['description']),
+        ];
+
         //Verify picture
         if (isset($registeringCatPicture) && $registeringCatPicture['picture']['error'] === 0) {
             if ($registeringCatPicture['picture']['size'] <= 1000000) {
@@ -31,16 +40,14 @@ class CatController extends Controller
                 $allowedExtensions = ['jpg', 'jpeg'];
 
                 $pathInfo = pathinfo($registeringCatPicture['picture']['name'],  PATHINFO_EXTENSION);
-                if (in_array($pathInfo, $allowedExtensions)) {
 
+                if (in_array($pathInfo, $allowedExtensions)) {
                     $registeringCatPicture = file_get_contents($registeringCatPicture['picture']['tmp_name']);
 
+                    //Create object if picture is okay
                     $cat = new Cat($registeringCatInfos, $registeringCatPicture);
 
-
-                    $infos = $cat->getObjectVars();
-
-                    if (!$cat->insert($infos)) {
+                    if (!$cat->insert($cat)) {
                         $error = "Cet email est déjà utilisé !";
                         echo $this->render('layout.default', 'templates.registration', $error);
                     };
@@ -56,6 +63,8 @@ class CatController extends Controller
             $error = "L'image n'est pas valide !";
             echo $this->render('layout.default', 'templates.registration', $error);
         }
+        $confirmationMsg = 'Votre compte a bien été créé';
+        echo $this->render('layout.default', 'templates.connexion', $confirmationMsg);
     }
 
 
@@ -68,17 +77,19 @@ class CatController extends Controller
         $userRetrievedFromDatabase = Cat::login($userInfos);
 
         if (!is_array($userRetrievedFromDatabase)) {
-            $userRetrievedFromDatabase = 'Informations de connexions erronnées';
-            echo $this->render('layout.default', 'templates.connexion', $userRetrievedFromDatabase);
+            $error = 'Informations de connexions erronées';
+            echo $this->render('layout.default', 'templates.connexion', $error);
         }
 
-        $_SESSION['userContext']['user']['id'] = (int)$userRetrievedFromDatabase['cat_id'];
-        $_SESSION['userContext']['user']['name'] = $userRetrievedFromDatabase['name'];
-        $_SESSION['userContext']['user']['email'] = $userRetrievedFromDatabase['email'];
-        $_SESSION['userContext']['user']['castration'] = $userRetrievedFromDatabase['castration'];
-        $_SESSION['userContext']['user']['age'] = $userRetrievedFromDatabase['age'];
-        $_SESSION['userContext']['user']['description'] = $userRetrievedFromDatabase['description'];
-        $_SESSION['userContext']['user']['picture'] = $userRetrievedFromDatabase['photo'];
+        $_SESSION['userContext']['user'] = [
+            'id' => $userRetrievedFromDatabase['cat_id'],
+            'name' => $userRetrievedFromDatabase['name'],
+            'email' => $userRetrievedFromDatabase['email'],
+            'castration' => $userRetrievedFromDatabase['castration'],
+            'age' => $userRetrievedFromDatabase['age'],
+            'description' => $userRetrievedFromDatabase['description'],
+            'picture' => $userRetrievedFromDatabase['photo']
+        ];
 
         echo $this->render('layout.default', 'templates.home');
     }

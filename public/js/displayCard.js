@@ -5,18 +5,19 @@ let nameSpace = d.querySelector("#catName");
 let ageSpace = d.querySelector("#catAge");
 let descriptionSpace = d.querySelector("#catDescription");
 
-let profileCatIdSpace = d.querySelectorAll(".catId");
-
+/* let profileCatIdSpace = d.querySelectorAll(".catId");
+ */
 let likeBtn = d.querySelectorAll(".likeBtn");
 
 let catProfile;
 
 async function run() {
-  catProfile = await fetchCatProfile();
-  displayCatProfile(catProfile);
+  while (fetchCatProfile) {
+    catProfile = await fetchCatProfile();
+    displayCatProfile(catProfile);
 
-  await catAnswer();
-  run();
+    await catAnswer();
+  }
 }
 
 async function fetchCatProfile() {

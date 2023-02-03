@@ -1,8 +1,8 @@
 <?php
 
-use Chatti\controllers\CatController;
+use Chatti\controllers\Controller;
 
 
-$catController = new CatController;
+$controller = new Controller;
 
-echo $catController->render('layout.default', 'templates.connexion');
+echo $controller->render('layout.default', 'templates.connexion');

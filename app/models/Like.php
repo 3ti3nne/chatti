@@ -7,27 +7,17 @@ use Chatti\utilities\Database;
 
 class Like extends Model
 {
-    private int $fromCatId;
-    private int $toCatId;
-    private int $likeValue;
+    protected int $fromCatId;
+    protected int $toCatId;
+    protected int $likeValue;
 
     public function __construct(int $likeValue, int $toCatId, int $fromCatId)
     {
         $this->fromCatId = $fromCatId;
         $this->toCatId = $toCatId;
         $this->likeValue = $likeValue;
-
-        return $this;
     }
 
-    /**
-     * Get object private variables
-     */
-    public function getObjectVars(): array
-    {
-        $array = get_object_vars($this);
-        return $array;
-    }
 
     /**
      * Like function
@@ -35,16 +25,19 @@ class Like extends Model
      * 
      * @param array from user $_POST like values
      */
-    public static function insertLike(array $data)
+    public function insertLike(object $like)
     {
+
+        $like = $this->getObjectVars($like);
+
         $db = Database::getInstance()->getConnexion();
 
         $request = "INSERT INTO likes(from_cat_id, to_cat_id, like_value)VALUES(:from_cat_id, :to_cat_id, :like_value)";
         $statement = $db->prepare($request);
 
-        $statement->bindParam(':from_cat_id', $data['fromCatId'], $db::PARAM_INT);
-        $statement->bindParam(':to_cat_id', $data['toCatId'], $db::PARAM_INT);
-        $statement->bindParam(':like_value', $data['likeValue'], $db::PARAM_INT);
+        $statement->bindParam(':from_cat_id', $like['fromCatId'], $db::PARAM_INT);
+        $statement->bindParam(':to_cat_id', $like['toCatId'], $db::PARAM_INT);
+        $statement->bindParam(':like_value', $like['likeValue'], $db::PARAM_INT);
 
         $statement->execute();
     }

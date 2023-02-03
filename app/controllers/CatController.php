@@ -5,14 +5,8 @@ namespace Chatti\controllers;
 use Chatti\models\Cat;
 use Chatti\controllers\Controller;
 
-/**
- * 
- */
-
 class CatController extends Controller
 {
-
-
     /**
      * @param array
      * 
@@ -24,14 +18,6 @@ class CatController extends Controller
 
         $error = null;
 
-        //Sanitizing inputs
-
-
-        $registeringCatInfos += [
-            'name' => $this->sanitizeData($registeringCatInfos['name']),
-            'email' => $this->sanitizeData($registeringCatInfos['email']),
-            'description' => $this->sanitizeData($registeringCatInfos['description']),
-        ];
 
         //Verify picture
         if (isset($registeringCatPicture) && $registeringCatPicture['picture']['error'] === 0) {
@@ -114,12 +100,15 @@ class CatController extends Controller
      */
     public function destroyUser(int $userId)
     {
-        Cat::destroy($userId);
+        if (isset($_SESSION['userContext']['user']['name']) && !empty($_SESSION['userContext']['user']['name'])) {
 
-        session_unset();
-        session_destroy();
+            Cat::destroy($userId);
 
-        $data = "Le compte a bien été supprimé";
-        echo $this->render('layout.default', 'templates.connexion', $data);
+            session_unset();
+            session_destroy();
+
+            $data = "Le compte a bien été supprimé";
+            echo $this->render('layout.default', 'templates.connexion', $data);
+        }
     }
 }

@@ -25,20 +25,26 @@ try {
     // Get json through PHP
     $json = file_get_contents('php://input');
     $data = json_decode($json);
+
     // Routing
     if (!empty($data)) {
         if (isset($data->getProfile)) {
+
             $catProfile = Cat::fetchLoveCats();
             echo json_encode($catProfile);
             exit();
         }
         if (isset($data->action) && $data->action === 'like') {
+
             $like = new LikeController();
+
+            //Combine fetch response and PHP $SESSION to insert in database
             $like->checkLikeAndInsert(
                 $data->response,
                 $data->likedUser,
                 $_SESSION['userContext']['user']['id']
             );
+            exit();
         }
     }
 
@@ -78,8 +84,8 @@ try {
      * Prevents all but connexion and register page when not connected
      */
     if (!isset($_SESSION['userContext']['user']['name']) && ($uri === '/register')) {
-        $catController = new CatController();
-        echo $catController->render($lay, 'templates.registration');
+        $controller = new Controller();
+        echo $controller->render($lay, 'templates.registration');
         exit();
     }
 
@@ -95,28 +101,33 @@ try {
             switch ($uri) {
 
                 case '/':
-                    $catController = new CatController();
-                    echo $catController->render($lay, 'templates.home');
+                    $controller = new Controller();
+                    echo $controller->render($lay, 'templates.home');
+                    exit();
                     break;
 
                 case '/profile':
-                    $catController = new CatController();
-                    echo $catController->render($lay, 'templates.profile');
+                    $controller = new Controller();
+                    echo $controller->render($lay, 'templates.profile');
+                    exit();
                     break;
 
                 case '/settings':
-                    $catController = new CatController();
-                    echo $catController->render($lay, 'templates.settings');
+                    $controller = new Controller();
+                    echo $controller->render($lay, 'templates.settings');
+                    exit();
                     break;
 
                 case  '/chat':
-                    $catController = new CatController();
-                    echo $catController->render($lay, 'templates.chat');
+                    $controller = new Controller();
+                    echo $controller->render($lay, 'templates.chat');
+                    exit();
                     break;
 
                 case '/about':
-                    $catController = new CatController();
-                    echo $catController->render($lay, 'templates.about');
+                    $controller = new Controller();
+                    echo $controller->render($lay, 'templates.about');
+                    exit();
                     break;
 
                 default:
@@ -129,7 +140,7 @@ try {
 
     $controller = new Controller;
     $errorMessage = 'Chat marche pas !';
-    echo $controller->render($lay, 'templates.error', $error->getMessage());
+    echo $controller->render($lay, 'templates.error', $errorMessage);
 } catch (Exception $error) {
 
     $controller = new Controller;

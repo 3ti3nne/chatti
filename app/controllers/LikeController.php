@@ -11,7 +11,6 @@ class LikeController extends Controller
     {
         $like = new Like($likeValue, $toCatId, $fromCatId);
 
-        $objectToArray = $like->getObjectVars();
-        $like->insertLike($objectToArray);
+        $like->insertLike($like);
     }
 }

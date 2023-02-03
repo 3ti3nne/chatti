@@ -7,14 +7,14 @@ use Chatti\utilities\Database;
 
 class Cat extends Model
 {
-    private string $name;
-    private string $password;
-    private string $email;
-    private int $age;
-    private int $castration;
-    private int $genre;
-    private string $description;
-    private string $picture;
+    protected string $name;
+    protected string $password;
+    protected string $email;
+    protected int $age;
+    protected int $castration;
+    protected int $genre;
+    protected string $description;
+    protected string $picture;
 
 
 
@@ -30,18 +30,6 @@ class Cat extends Model
         $this->picture = $userPicture;
     }
 
-
-    /**
-     * Get object private variables
-     * @return array
-     */
-    public function getObjectVars(): array
-    {
-        $array = get_object_vars($this);
-        return $array;
-    }
-
-
     /**
      * Insert new user with informations from the object Cat, created after register's form passed Model
      * Change object into array before sending it to database
@@ -51,7 +39,7 @@ class Cat extends Model
     public function insert(object $dataFromUser): bool
     {
 
-        $dataFromUser = self::getObjectVars($dataFromUser);
+        $dataFromUser = $this->getObjectVars($dataFromUser);
 
         $db = Database::getInstance()->getConnexion();
 
@@ -62,6 +50,7 @@ class Cat extends Model
         $statement = $statement->fetch();
 
         if (is_array($statement) && !empty($statement)) {
+
             return false;
         } else {
 
@@ -126,6 +115,7 @@ class Cat extends Model
 
         if (is_array($userRetrievedFromDatabase) && !empty($userRetrievedFromDatabase)) {
             if (password_verify($userInfos['password'], $userRetrievedFromDatabase['password'])) {
+
                 return $userRetrievedFromDatabase;
             }
         }
@@ -139,14 +129,11 @@ class Cat extends Model
     {
         $db = Database::getInstance()->getConnexion();
 
-        if (isset($_SESSION['userContext']['user']['name']) && !empty($_SESSION['userContext']['user']['name'])) {
+        $request = "DELETE FROM cats WHERE (cat_id = :userId)";
+        $statement = $db->prepare($request);
+        $statement->bindParam(':userId', $userId, $db::PARAM_INT);
 
-            $request = "DELETE FROM cats WHERE (cat_id = :userId)";
-            $statement = $db->prepare($request);
-            $statement->bindParam(':userId', $userId, $db::PARAM_INT);
-
-            $statement->execute();
-        }
+        $statement->execute();
     }
 
     /**

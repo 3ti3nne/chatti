@@ -6,7 +6,7 @@ class Controller
 {
     const VIEWPATH = __DIR__ . '/../views/';
     const EXTENSION = '.templ.php';
-    const TITLE = 'Chatti';
+    const TITLE = 'Chatti, l\'application de rencontre pour chats célibataires';
 
     /**
      * Prevent from displaying php code before finishing the process, like a transaction,
